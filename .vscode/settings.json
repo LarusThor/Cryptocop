@@ -1,0 +1,6 @@
+{
+  "dotnet.server.useModernNet": true,
+  "dotnet.server.sdkVersion": "8.0.415",
+  "dotnet.server.path": "/usr/local/share/dotnet/dotnet",
+  "dotnet.server.verboseLogging": true
+}
