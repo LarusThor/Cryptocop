@@ -1,3 +1,6 @@
+using Cryptocop.Models.Entities;
+using Microsoft.EntityFrameworkCore;
+
 namespace Cryptocop.Repositories.Data;
 
 public class CryptocopDbContext : DbContext
