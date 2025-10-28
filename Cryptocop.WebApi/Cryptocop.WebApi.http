@@ -1,0 +1,6 @@
+@Cryptocop.WebApi_HostAddress = http://localhost:5137
+
+GET {{Cryptocop.WebApi_HostAddress}}/weatherforecast/
+Accept: application/json
+
+###
