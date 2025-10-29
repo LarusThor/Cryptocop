@@ -17,7 +17,7 @@ public class OrderItem
 
     public string ProductIdentifier { get; set;}
 
-    public float Quantity { get; set; }
+    public float? Quantity { get; set; }
 
     public float UnitPrice { get; set; }
 

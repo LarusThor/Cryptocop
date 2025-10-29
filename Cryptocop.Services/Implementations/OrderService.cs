@@ -11,29 +11,23 @@ public class OrderService : IOrderService
 
     private readonly IShoppingCartRepository _shoppingCartRepository;
     
-    public OrderService(IOrderRepository orderRepository, IShoppingCartRepository cartRepository)
+    private readonly IQueueService _queueService;
+    public OrderService(IOrderRepository orderRepository, IShoppingCartRepository cartRepository,  IQueueService queueService)
     {
         _orderRepository = orderRepository;
         _shoppingCartRepository = cartRepository;
+        _queueService = queueService;
     }
     
-    public Task<IEnumerable<OrderDto>> GetOrdersAsync(string email)
+    public async Task<IEnumerable<OrderDto>> GetOrdersAsync(string email)
     {
-        return  _orderRepository.GetOrdersAsync(email);
+        return await _orderRepository.GetOrdersAsync(email);
     }
 
-    public Task CreateNewOrderAsync(string email, OrderInputModel order)
+    public async Task CreateNewOrderAsync(string email, OrderInputModel order)
     {
-        
-        
-        _orderRepository.CreateNewOrderAsync(email, order);
-        _shoppingCartRepository.DeleteCartAsync(email);
-        
-        //TODO:
-        /*
-            Publish a message to RabbitMQ with the routing key ‘create-order’ and include the
-            newly created order
-         */
-        return Task.CompletedTask;
+        var newOrder = _orderRepository.CreateNewOrderAsync(email, order);
+        await _shoppingCartRepository.DeleteCartAsync(email);
+        await _queueService.PublishMessageAsync("create-order", newOrder);
     }
 }

@@ -18,5 +18,5 @@ public class ShoppingCartItem
 
     public float? Quantity { get; set; }
 
-    public float UnitPrice { get; set; }
+    public float? UnitPrice { get; set; }
 }
