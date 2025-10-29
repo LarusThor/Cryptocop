@@ -14,4 +14,6 @@ public class ShoppingCart
 
     [ForeignKey(nameof(UserId))]
     public User User { get; set; }
+    
+    public ICollection<ShoppingCartItem> ShoppingCartItems { get; set; } = new List<ShoppingCartItem>();
 }

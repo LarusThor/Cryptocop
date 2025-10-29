@@ -13,10 +13,10 @@ public class ShoppingCartItem
 
     [ForeignKey(nameof(ShoppingCartId))]
     public ShoppingCart ShoppingCart { get; set; }
-
+    
     public string ProductIdentifier { get; set; }
 
-    public decimal Quantity { get; set; }
+    public float? Quantity { get; set; }
 
-    public decimal UnitPrice { get; set; }
+    public float UnitPrice { get; set; }
 }

@@ -22,7 +22,7 @@ public class OrderDto
     
     public string CreditCard { get; set; }
     
-    public string OrderDate  { get; set; }
+    public DateTime OrderDate  { get; set; }
     
     public float TotalPrice  { get; set; }
     
