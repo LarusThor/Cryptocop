@@ -4,7 +4,7 @@ public class PaymentCardHelper
 {
     public static string MaskPaymentCard(string paymentCardNumber)
     {
-        // TODO: Implement
+        // TODO: I think I already implemented this
         return "";
     }
 }
