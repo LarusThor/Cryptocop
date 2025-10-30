@@ -16,22 +16,23 @@ public class CryptoCurrencyService : ICryptoCurrencyService
         _httpClient = httpClient;
         _configuration = configuration;
 
-        _httpClient.BaseAddress = new Uri("https://data.messari.io/api");
+        _httpClient.BaseAddress = new Uri("https://data.messari.io/api/v2/");
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         
         var apiKey = _configuration["Cryptocop:ApiKey"];
-        _httpClient.DefaultRequestHeaders.Add("baFKS4in-aQwbDpg+zbRYVbfbeVrpG6rxMpNxIeTGWxMXD+g", apiKey);
+        Console.WriteLine($"API key from config: {apiKey}");
+        _httpClient.DefaultRequestHeaders.Add("x-messari-api-key", apiKey);
     }
     
     public async  Task<IEnumerable<CryptoCurrencyDto>> GetAvailableCryptocurrenciesAsync()
     {
-        var response = await _httpClient.GetAsync("/v2/assets");
+        var response = await _httpClient.GetAsync("assets");
         response.EnsureSuccessStatusCode();
 
         var cryptoList = await response.DeserializeJsonToList<CryptoCurrencyDto>(flatten:true);
         
         var symbols = new[] { "BTC", "ETH", "USDT", "LINK"};
-
+        
         var filteredList = cryptoList.Where(c => symbols.Contains(c.Symbol));
         
         return filteredList;

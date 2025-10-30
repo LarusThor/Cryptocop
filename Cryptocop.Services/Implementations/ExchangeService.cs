@@ -17,21 +17,20 @@ public class ExchangeService : IExchangeService
         _httpClient = httpClient;
         _configuration = configuration;
         
-        _httpClient.BaseAddress = new Uri("https://data.messari.io/api");
+        _httpClient.BaseAddress = new Uri("https://data.messari.io/api/v1/");
         _httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
         
         var apiKey = _configuration["Cryptocop:ApiKey"];
-        _httpClient.DefaultRequestHeaders.Add("baFKS4in-aQwbDpg+zbRYVbfbeVrpG6rxMpNxIeTGWxMXD+g", apiKey);
+        _httpClient.DefaultRequestHeaders.Add("x-messari-api-key", apiKey);
     }
     
     public async Task<Envelope<ExchangeDto>> GetExchangesAsync(int pageNumber = 1)
     {
         int pageSize = 20;
-        
-        var response = await _httpClient.GetAsync($"$/v1/markets?page={pageNumber}&limit={pageSize}");
+        var response = await _httpClient.GetAsync($"markets?page={pageNumber}");
         response.EnsureSuccessStatusCode();
 
-        var marketList = await response.DeserializeJsonToList<ExchangeDto>(flatten:true);
+        var marketList = await response.DeserializeJsonToList<ExchangeDto>();
         var envelope = new Envelope<ExchangeDto>
         {
             Items = marketList,

@@ -23,6 +23,11 @@ builder.Services.AddDbContext<CryptocopDbContext>(options =>
 
 builder.Services.AddHttpClient();
 
+builder.Configuration.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
+
+builder.Services.AddHttpClient<ICryptoCurrencyService, CryptoCurrencyService>();
+builder.Services.AddHttpClient<IExchangeService, ExchangeService>();
+
 builder.Services.AddScoped<IAddressRepository, AddressRepository>();
 builder.Services.AddScoped<IOrderRepository, OrderRepository>();
 builder.Services.AddScoped<IPaymentRepository, PaymentRepository>();
@@ -32,8 +37,6 @@ builder.Services.AddScoped<IUserRepository, UserRepository>();
 
 builder.Services.AddScoped<IAccountService, AccountService>();
 builder.Services.AddScoped<IAddressService, AddressService>();
-builder.Services.AddScoped<ICryptoCurrencyService, CryptoCurrencyService>();
-builder.Services.AddScoped<IExchangeService, ExchangeService>();
 builder.Services.AddScoped<IJwtTokenService, JwtTokenService>();
 builder.Services.AddScoped<IOrderService, OrderService>();
 builder.Services.AddScoped<IPaymentService, PaymentService>();

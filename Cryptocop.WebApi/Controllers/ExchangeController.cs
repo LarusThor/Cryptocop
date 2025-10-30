@@ -1,3 +1,5 @@
+using Cryptocop.Models;
+using Cryptocop.Models.Dtos;
 using Cryptocop.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Authorization;
@@ -20,7 +22,7 @@ public class ExchangeController : ControllerBase
     [HttpGet]
     public async Task<IActionResult> GetExchangesAsync([FromQuery] int pageNumber = 1)
     {
-        var exchanges = await _exchangeService.GetExchangesAsync(pageNumber);
-        return Ok(exchanges);
+        var envelope = await _exchangeService.GetExchangesAsync(pageNumber);
+        return Ok(envelope);
     }
 }
