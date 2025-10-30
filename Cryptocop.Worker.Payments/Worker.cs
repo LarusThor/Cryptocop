@@ -1,26 +1,51 @@
-namespace Cryptocop.Software.Worker.Payments;
+using System.Text;
+using System.Text.Json;
+using CreditCardValidator;
+using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
+using RabbitMQ.Client;
+using RabbitMQ.Client.Events;
+
+namespace Cryptocop.Worker.Payments;
 
 public class Worker : BackgroundService
 {
     private readonly ILogger<Worker> _logger;
+    private IConnection? _connection;
+    private RabbitMQ.Client.IModel? _channel;
 
     public Worker(ILogger<Worker> logger)
     {
         _logger = logger;
+        InitializeRabbitMq();
     }
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        while (!stoppingToken.IsCancellationRequested)
+        var factory = new ConnectionFactory(){ HostName = "rabbitmq", UserName = "guest", Password = "guest" };
+        var connection = factory.CreateConnection();
+        var channel = connection.CreateModel();
+        
+        channel.QueueDeclare("payment-queue", true, false, false);
+        channel.QueueBind("payment-queue", "amq.direct", "create-order");
+        
+        var consumer = new EventingBasicConsumer(channel);
+        consumer.Received += (model, ea) =>
         {
-            if (_logger.IsEnabled(LogLevel.Information))
-            {
-                _logger.LogInformation("Worker running at: {time}", DateTimeOffset.Now);
-            }
-            
-            // TODO: Setup consumer
-            // TODO: Remove Task.Delay
-            await Task.Delay(1000, stoppingToken);
-        }
+            var body = ea.Body.ToArray();
+            var json = Encoding.UTF8.GetString(body);
+            var order = JsonSerializer.Deserialize<OrderMessage>(json);
+
+            var detector = new CreditCardDetector(order.CreditCard);
+        };
+        channel.BasicConsume("payment-queue", true, consumer);
+        return Task.CompletedTask;
+    }
+    
+    public class OrderMessage
+    {
+        public string CreditCard { get; set; } = null!;
+        public string CardholderName { get; set; } = null!;
+        public float TotalPrice { get; set; }
     }
 }
