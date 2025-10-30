@@ -5,7 +5,11 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="CreditCardValidator" Version="3.0.1" />
+    <PackageReference Include="Microsoft.Extensions.Hosting" Version="9.0.10" />
     <PackageReference Include="Newtonsoft.Json" Version="13.0.4" />
+    <PackageReference Include="RabbitMQ.Client" Version="6.8.1" />
+    <PackageReference Include="System.Text.Json" Version="9.0.10" />
   </ItemGroup>
 
   <PropertyGroup>

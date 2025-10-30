@@ -11,6 +11,24 @@ services:
       - "5432:5432"
     volumes:
       - cryptocop_data:/var/lib/postgresql/data
+    networks:
+      - cryptocop-network
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    networks:
+      - cryptocop-network
+
+  payment-worker:
+    build: ./Cryptocop.Worker.Payments
+    depends_on:
+      - rabbitmq
+    networks:
+      - cryptocop-network
 
   cryptocop-api:
     build:
@@ -19,13 +37,20 @@ services:
     container_name: cryptocop-api
     depends_on:
       - cryptocop-db
+      - rabbitmq
     ports:
       - "8080:8080"
       - "8081:8081"
     environment:
       ASPNETCORE_ENVIRONMENT: Development
-      ConnectionStrings__CryptocopConnection: "Host=cryptocop;Port=5432;Database=cryptocop;Username=postgres;Password=postgres"
+      ConnectionStrings__CryptocopConnection: "Host=cryptocop-db;Port=5432;Database=cryptocop;Username=postgres;Password=postgres"
     command: bash -c "sleep 5 && dotnet Cryptocop.WebApi.dll"
+    networks:
+      - cryptocop-network
 
 volumes:
   cryptocop_data:
+
+networks:
+  cryptocop-network:
+    driver: bridge

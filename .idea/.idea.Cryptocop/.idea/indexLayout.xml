@@ -1,8 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="UserContentModel">
-    <attachedFolders />
-    <explicitIncludes />
+    <attachedFolders>
+      <Path>Cryptocop.Worker.Emails</Path>
+      <Path>Cryptocop.Worker.Payments</Path>
+    </attachedFolders>
+    <explicitIncludes>
+      <Path>docker-compose.yml</Path>
+    </explicitIncludes>
     <explicitExcludes />
   </component>
 </project>
