@@ -1,11 +1,14 @@
 using Cryptocop.Models.InputModels;
 using Cryptocop.Services.Interfaces;
+using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace Cryptocop.WebApi.Controllers;
 
 [Route("api/addresses")]
 [ApiController]
+[Authorize(AuthenticationSchemes = JwtBearerDefaults.AuthenticationScheme)]
 public class AddressController : ControllerBase
 {
     private readonly IAddressService  _addressService;
@@ -14,7 +17,7 @@ public class AddressController : ControllerBase
     {
         _addressService = addressService;
     }
-
+    
     [HttpGet]
     public async Task<IActionResult> GetAllAddressesAsync(string email)
     {
@@ -28,8 +31,8 @@ public class AddressController : ControllerBase
         await _addressService.AddAddressAsync(email, address);
         return Ok();
     }
-
-    [HttpDelete("{id:int}")]
+    
+    [HttpDelete("id:int")]
     public async Task<IActionResult> DeleteAddressAsync(string email, int id)
     {
         await _addressService.DeleteAddressAsync(email, id);

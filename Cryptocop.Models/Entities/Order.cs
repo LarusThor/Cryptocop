@@ -9,23 +9,23 @@ public class Order
     [DatabaseGenerated(DatabaseGeneratedOption.Identity)]
     public int Id { get; set; }
 
-    public string Email { get; set; }
+    public string Email { get; set; }  = null!;
 
-    public string FullName { get; set; }
+    public string FullName { get; set; }  = null!;
 
-    public string StreetName { get; set; }
+    public string StreetName { get; set; }  = null!;
 
-    public string HouseNumber { get; set; }
+    public string HouseNumber { get; set; }  = null!;
 
-    public string ZipCode { get; set; }
+    public string ZipCode { get; set; }  = null!;
 
-    public string Country { get; set; }
+    public string Country { get; set; } = null!;
 
-    public string City { get; set; }
+    public string City { get; set; }  = null!;
 
-    public string CardholderName { get; set; }
+    public string CardholderName { get; set; } = null!;
 
-    public string MaskedCreditCard { get; set; }
+    public string MaskedCreditCard { get; set; } = null!;
 
     public DateTime OrderDate { get; set; }
 

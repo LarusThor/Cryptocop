@@ -5,7 +5,7 @@ namespace Cryptocop.Services.Interfaces;
 
 public interface IAccountService
 {
-    Task<UserDto> CreateUserAsync(RegisterInputModel inputModel);
-    Task<UserDto> AuthenticateUserAsync(LoginInputModel loginInputModel);
+    Task<UserDto?> CreateUserAsync(RegisterInputModel inputModel);
+    Task<UserDto?> AuthenticateUserAsync(LoginInputModel loginInputModel);
     Task LogoutAsync(int tokenId);
 }

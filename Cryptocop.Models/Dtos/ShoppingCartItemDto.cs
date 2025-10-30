@@ -4,7 +4,7 @@ public class ShoppingCartItemDto
 {
     public int Id { get; set; }
     
-    public string ProductIdentifier { get; set; }
+    public string ProductIdentifier { get; set; }  = null!;
     
     public float? Quantity { get; set; }
     

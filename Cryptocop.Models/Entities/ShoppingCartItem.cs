@@ -12,9 +12,9 @@ public class ShoppingCartItem
     public int ShoppingCartId { get; set; }
 
     [ForeignKey(nameof(ShoppingCartId))]
-    public ShoppingCart ShoppingCart { get; set; }
+    public ShoppingCart ShoppingCart { get; set; } = null!;
     
-    public string ProductIdentifier { get; set; }
+    public string ProductIdentifier { get; set; } = null!;
 
     public float? Quantity { get; set; }
 

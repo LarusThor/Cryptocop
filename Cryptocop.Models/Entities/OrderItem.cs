@@ -13,9 +13,9 @@ public class OrderItem
     public int OrderId { get; set; }
 
     [ForeignKey(nameof(OrderId))]
-    public Order Order { get; set; }
+    public Order Order { get; set; }  = null!;
 
-    public string ProductIdentifier { get; set;}
+    public string ProductIdentifier { get; set;} = null!;
 
     public float? Quantity { get; set; }
 

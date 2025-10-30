@@ -13,11 +13,11 @@ public class PaymentCard
     public int UserId { get; set; }
 
     [ForeignKey(nameof(UserId))]
-    public User User { get; set; }
+    public User User { get; set; }  = null!;
 
-    public string CardholderName { get; set; }
+    public string CardholderName { get; set; } = null!;
 
-    public string CardNumber { get; set; }
+    public string CardNumber { get; set; } = null!;
 
     public int Month { get; set; }
 

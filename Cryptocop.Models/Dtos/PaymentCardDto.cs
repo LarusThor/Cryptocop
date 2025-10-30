@@ -4,9 +4,9 @@ public class PaymentCardDto
 {
     public int Id { get; set; }
     
-    public string CardholderName { get; set; }
+    public string CardholderName { get; set; }  = null!;
     
-    public string CardNumber { get; set; }
+    public string CardNumber { get; set; }  = null!;
     
     public int Month { get; set; }
     
