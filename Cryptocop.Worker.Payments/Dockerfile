@@ -3,10 +3,9 @@ WORKDIR /app
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-
-# Copy the csproj file and restore dependencies
-COPY ["Cryptocop.Worker.Payments.csproj", "."]
-RUN dotnet restore "Cryptocop.Worker.Payments.csproj"
+COPY ["Cryptocop.Worker.Payments/Cryptocop.Worker.Payments.csproj", "Cryptocop.Worker.Payments/"]
+COPY ["Cryptocop.Models/Cryptocop.Models.csproj", "Cryptocop.Models/"]
+RUN dotnet restore "Cryptocop.Worker.Payments/Cryptocop.Worker.Payments.csproj"
 
 # Copy all source files
 COPY . .

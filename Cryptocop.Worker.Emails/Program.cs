@@ -1,4 +1,4 @@
-using Cryptocop.Software.Worker.Emails;
+using Cryptocop.Worker.Emails;
 
 var builder = Host.CreateApplicationBuilder(args);
 builder.Services.AddHostedService<Worker>();

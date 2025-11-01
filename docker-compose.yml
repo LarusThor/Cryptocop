@@ -24,7 +24,18 @@ services:
       - cryptocop-network
 
   payment-worker:
-    build: ./Cryptocop.Worker.Payments
+    build:
+      context: .
+      dockerfile: ./Cryptocop.Worker.Payments/Dockerfile
+    depends_on:
+      - rabbitmq
+    networks:
+      - cryptocop-network
+    
+  email-worker:
+    build:
+        context: .
+        dockerfile: ./Cryptocop.Worker.Emails/Dockerfile
     depends_on:
       - rabbitmq
     networks:
